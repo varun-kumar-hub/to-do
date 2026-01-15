@@ -12,10 +12,8 @@ body {
   color: white;
   overflow-x: hidden;
   transition: background 0.5s ease;
-  background-size: contain;
-  /* Ensure whole character is visible */
-  background-position: center bottom;
-  /* Anchor to bottom */
+  background-size: cover;
+  background-position: center top;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-color: #000;
@@ -109,6 +107,84 @@ body.theme-gyomei {
   --border-c: #95a5a6;
   background-image: url('/backgrounds/gyomei.png');
 }
+
+/* 7. GIYU (Water) */
+body.theme-giyu {
+  --primary: #0984e3;
+  --secondary: #74b9ff;
+  --accent: #81ecec;
+  --text-c: #fff;
+  --panel-bg: rgba(5, 10, 20, 0.7);
+  --border-c: #0984e3;
+  background-image: url('/backgrounds/giyu.png');
+}
+
+/* 8. INOSUKE (Beast) */
+body.theme-inosuke {
+  --primary: #74b9ff;
+  --secondary: #0984e3;
+  --accent: #dfe6e9;
+  --text-c: #fff;
+  --panel-bg: rgba(10, 20, 30, 0.7);
+  --border-c: #74b9ff;
+  background-image: url('/backgrounds/inosuke.png');
+}
+
+/* 9. TENGEN (Sound / Flashy) */
+body.theme-tengen {
+  --primary: #ff7675;
+  --secondary: #d63031;
+  --accent: #fdcb6e;
+  --text-c: #fff;
+  --panel-bg: rgba(30, 10, 10, 0.7);
+  --border-c: #ff7675;
+  background-image: url('/backgrounds/tengen.png');
+}
+
+/* 10. MITSURI (Love) */
+body.theme-mitsuri {
+  --primary: #fd79a8;
+  --secondary: #e84393;
+  --accent: #55efc4;
+  --text-c: #fff;
+  --panel-bg: rgba(30, 10, 20, 0.7);
+  --border-c: #fd79a8;
+  background-image: url('/backgrounds/mitsuri.png');
+}
+
+/* 11. MUICHIRO (Mist) */
+body.theme-muichiro {
+  --primary: #7f8c8d;
+  --secondary: #95a5a6;
+  --accent: #a29bfe;
+  --text-c: #fff;
+  --panel-bg: rgba(20, 20, 25, 0.7);
+  --border-c: #7f8c8d;
+  background-image: url('/backgrounds/muichiro.png');
+}
+
+/* 12. OBANAI (Serpent) */
+body.theme-obanai {
+  --primary: #ecf0f1;
+  --secondary: #bdc3c7;
+  --accent: #ffd700;
+  --text-c: #fff;
+  --panel-bg: rgba(10, 20, 10, 0.7);
+  --border-c: #ecf0f1;
+  background-image: url('/backgrounds/obanai.png');
+}
+
+/* 13. MUZAN (Demon King) */
+body.theme-muzan {
+  --primary: #ff0000;
+  --secondary: #2d3436;
+  --accent: #636e72;
+  --text-c: #fff;
+  --panel-bg: rgba(0, 0, 0, 0.85);
+  --border-c: #ff0000;
+  background-image: url('/backgrounds/muzan.png');
+}
+
 
 /* --- UI COMPONENTS --- */
 .game-panel {

@@ -34,11 +34,39 @@ export const useTasks = () => {
         fetchTasks()
     }, [user])
 
-    const addTask = async (rawTitle, description) => {
+    const addTask = async (rawTitle, description, customTime = '', imageFile = null) => {
         // Apply Smart Parsing
-        const { title, priority, dueDate } = smartParse(rawTitle)
+        let { title, priority, dueDate } = smartParse(rawTitle)
+
+        // Merge customTime if provided
+        if (customTime) {
+            if (!dueDate) dueDate = new Date();
+            const [hours, minutes] = customTime.split(':').map(Number);
+            dueDate.setHours(hours, minutes, 0, 0);
+        }
+
+        let imageUrl = null;
 
         try {
+            // 1. Upload Image (if provided)
+            if (imageFile) {
+                const fileExt = imageFile.name.split('.').pop();
+                const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+                const { error: uploadError } = await supabase.storage
+                    .from('task-attachments')
+                    .upload(fileName, imageFile);
+
+                if (uploadError) throw uploadError;
+
+                // Get Public URL
+                const { data: publicUrlData } = supabase.storage
+                    .from('task-attachments')
+                    .getPublicUrl(fileName);
+
+                imageUrl = publicUrlData.publicUrl;
+            }
+
+            // 2. Insert Task
             const { data, error } = await supabase
                 .from('tasks')
                 .insert([{
@@ -46,6 +74,7 @@ export const useTasks = () => {
                     description,
                     priority,
                     due_date: dueDate,
+                    image_url: imageUrl, // Save image URL
                     user_id: user.id,
                     is_completed: false
                 }])
