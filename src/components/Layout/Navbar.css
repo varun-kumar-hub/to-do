@@ -1,0 +1,242 @@
+/* Navbar Container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    background: rgba(0, 0, 0, 0.9);
+    border-bottom: 1px solid var(--primary);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 70px;
+    transition: all 0.3s ease;
+}
+
+/* Brand Section */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.nav-logo {
+    height: 40px;
+    filter: drop-shadow(0 0 5px var(--primary));
+}
+
+.nav-title {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.8rem;
+    color: var(--primary);
+    line-height: 1;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Divider */
+.nav-divider {
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.nav-link-btn {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    min-width: 80px;
+}
+
+/* Right Side Group */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Theme Dropdown */
+.theme-wrapper {
+    position: relative;
+}
+
+.theme-toggle-btn {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dropdown-arrow {
+    font-size: 0.8rem;
+}
+
+/* Theme Menu */
+.theme-menu {
+    position: absolute;
+    top: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 15, 15, 0.98);
+    border: 1px solid var(--primary);
+    padding: 1.2rem;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.8rem;
+    width: 320px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    z-index: 200;
+}
+
+/* User Info */
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-rank {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.9rem;
+    color: var(--text-c);
+    white-space: nowrap;
+}
+
+.rank-title {
+    color: var(--accent);
+}
+
+.btn-exit {
+    padding: 0.3rem 1rem;
+    font-size: 1rem;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid var(--primary);
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+    position: relative;
+}
+
+.modal-title {
+    font-family: 'Teko', sans-serif;
+    font-size: 2rem;
+    margin: 0 0 1rem 0;
+    color: var(--primary);
+    text-transform: uppercase;
+}
+
+.modal-text {
+    font-family: 'Noto Serif JP', serif;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn-cancel {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-confirm {
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid #ff4444;
+    color: #ff4444;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 900px) {
+    .navbar {
+        height: auto;
+        flex-direction: column;
+        padding: 0.8rem 1rem;
+        gap: 1rem;
+    }
+
+    .nav-divider {
+        display: none;
+    }
+
+    .nav-brand {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+
+    .nav-link-btn {
+        flex: 1;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    .nav-right {
+        width: 100%;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+
+    .theme-toggle-btn span:first-child {
+        display: none;
+        /* Hide text, keep icon if any or just make it compact */
+    }
+
+    .theme-toggle-btn::after {
+        content: '🎨';
+        font-size: 1.2rem;
+    }
+
+    .user-rank {
+        display: none;
+        /* Hide rank text on mobile to save space */
+    }
+
+    .theme-menu {
+        position: fixed;
+        width: 90%;
+        max-width: 300px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
