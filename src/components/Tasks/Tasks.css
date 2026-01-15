@@ -1,0 +1,208 @@
+.task-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Form - Cyber Console */
+.task-form {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #333;
+    padding: 2px;
+    /* For double border effect container */
+    position: relative;
+    margin-bottom: 3rem;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.task-form::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--neon-blue), transparent, var(--neon-purple));
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.task-inputs {
+    background: #0a0a0a;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.task-input-main {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #333;
+    border-radius: 0;
+    padding: 1rem 0;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.task-input-main:focus {
+    border-color: var(--neon-blue);
+    box-shadow: none;
+    background: linear-gradient(90deg, rgba(0, 243, 255, 0.1), transparent);
+}
+
+.task-input-desc {
+    background: transparent;
+    border: 1px solid #333;
+    color: #aaa;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+}
+
+.task-input-desc:focus {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 10px rgba(188, 19, 254, 0.2);
+}
+
+.form-actions {
+    background: #111;
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #333;
+}
+
+.btn-primary {
+    /* Inherits from index.css */
+}
+
+/* List - Holographic Cards */
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.task-item {
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid var(--neon-blue);
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
+}
+
+.task-item::after {
+    /* Scanline effect */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(transparent 50%, rgba(0, 243, 255, 0.05) 50%);
+    background-size: 100% 4px;
+    pointer-events: none;
+}
+
+.task-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+    border-color: white;
+    z-index: 10;
+}
+
+.task-item.completed {
+    border-color: #333;
+    opacity: 0.7;
+    filter: grayscale(100%);
+}
+
+.task-checkbox-wrapper {
+    margin-top: 5px;
+}
+
+.task-checkbox {
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border: 2px solid var(--neon-blue);
+    background: black;
+    cursor: pointer;
+    transform: rotate(45deg);
+    /* Diamond checkbox */
+    transition: all 0.3s;
+}
+
+.task-checkbox:checked {
+    background: var(--neon-blue);
+    box-shadow: 0 0 10px var(--neon-blue);
+}
+
+.task-content {
+    flex: 1;
+}
+
+.task-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.task-title.completed {
+    text-decoration: line-through;
+    text-decoration-color: var(--neon-pink);
+    text-decoration-thickness: 3px;
+    color: #666;
+}
+
+.task-desc {
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--neon-blue);
+    opacity: 0.8;
+    font-size: 1rem;
+}
+
+.delete-btn {
+    background: transparent;
+    border: 1px solid var(--neon-pink);
+    color: var(--neon-pink);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.delete-btn:hover {
+    background: var(--neon-pink);
+    color: black;
+    box-shadow: 0 0 15px var(--neon-pink);
+}
+
+/* Empty State */
+.empty-state {
+    border: 1px dashed var(--neon-blue);
+    padding: 4rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--neon-blue);
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px var(--neon-blue);
+}

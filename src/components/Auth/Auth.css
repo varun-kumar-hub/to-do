@@ -1,0 +1,110 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+  /* Inherits background from body */
+}
+
+/* Wisteria Hanging decorations could be added here in pseudo-elements */
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--paper-bg);
+  background-image: url("https://www.transparenttextures.com/patterns/rice-paper-2.png");
+  border: 4px double var(--ink-black);
+  padding: 3rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.auth-card::before {
+  content: '鬼殺隊';
+  /* Demon Slayer Corps */
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink-black);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  font-family: 'Noto Serif JP', serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border: 2px solid white;
+}
+
+.auth-title {
+  font-size: 2.5rem;
+  color: var(--ink-black);
+  text-shadow: none;
+  border-bottom: 2px solid var(--demon-blood);
+  display: inline-block;
+  padding-bottom: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.auth-subtitle {
+  color: #555;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-family: 'Noto Serif JP', serif;
+}
+
+.auth-button {
+  margin-top: 1rem;
+  background: var(--tanjiro-green);
+  /* Tanjiro Checkers Green */
+  background-image: var(--pattern-ichimatsu);
+  background-size: 20px 20px;
+  color: white;
+  text-shadow: 1px 1px 0 black;
+  padding: 1rem;
+  border: 2px solid var(--ink-black);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.auth-button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px var(--tanjiro-green);
+}
+
+.auth-link {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.auth-link a {
+  color: var(--demon-blood);
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 1px solid currentColor;
+}
+
+.error-message {
+  border: 2px solid var(--demon-blood);
+  color: var(--demon-blood);
+  padding: 0.5rem;
+  font-weight: bold;
+  background: rgba(255, 0, 0, 0.1);
+}
