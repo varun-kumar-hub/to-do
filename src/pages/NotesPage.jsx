@@ -1,24 +1,17 @@
-
-import { useState } from 'react'
 import { useTasks } from '../hooks/useTasks'
 import { TaskForm, TaskList } from '../components/Tasks/TaskComponents'
 import { useTheme } from '../context/ThemeContext'
 
-const Dashboard = () => {
-    const { tasks, loading, error, addTask, toggleTaskCompletion, deleteTask, refreshTasks } = useTasks()
+const NotesPage = () => {
+    const { tasks, loading, error, addTask, toggleTaskCompletion, deleteTask } = useTasks()
     const { theme } = useTheme()
-    const [activeTab, setActiveTab] = useState('missions') // 'missions' | 'notes'
 
     if (loading && tasks.length === 0) {
-        return <div style={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontFamily: 'Teko', fontSize: '2rem' }}>LOADING WORLD...</div>
+        return <div style={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontFamily: 'Teko', fontSize: '2rem' }}>LOADING ARCHIVES...</div>
     }
 
-    // Filter Tasks vs Notes
-    // Assume if 'type' is missing, it's a task
-    const filteredItems = tasks.filter(t => {
-        const itemType = t.type || 'task';
-        return activeTab === 'missions' ? itemType === 'task' : itemType === 'note';
-    });
+    // Filter only Notes
+    const notes = tasks.filter(t => t.type === 'note');
 
     return (
         <div style={{
@@ -31,44 +24,40 @@ const Dashboard = () => {
             alignItems: 'start'
         }}>
 
-            {/* LEFT COLUMN: COMMAND POST (Input) */}
+            {/* LEFT COLUMN: INPUT */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-
-                {/* Status Card */}
                 <div className="game-panel">
                     <h3 style={{ fontFamily: 'Teko', fontSize: '1.5rem', color: 'var(--accent)', margin: 0 }}>
                         STATUS
                     </h3>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.5rem' }}>
-                        <div style={{ fontSize: '2.5rem' }}>{theme === 'gyomei' ? '🪨' : '⚔️'}</div>
+                        <div style={{ fontSize: '2.5rem' }}>📜</div>
                         <div>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Hashira</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Scribe</div>
                             <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>Style: {theme.toUpperCase()}</div>
                         </div>
                     </div>
                 </div>
 
-                {/* Input Form Panel */}
                 <div className="game-panel" style={{ padding: '1.5rem' }}>
                     <h3 style={{ fontFamily: 'Teko', fontSize: '1.5rem', margin: '0 0 1rem 0' }}>
-                        NEW ORDER
+                        NEW ENTRY
                     </h3>
-                    <TaskForm onAddTask={addTask} />
+                    <TaskForm onAddTask={addTask} defaultType="note" />
                 </div>
-
             </div>
 
-            {/* RIGHT COLUMN: MISSION LOG (List) */}
+            {/* RIGHT COLUMN: LIST */}
             <div className="game-panel" style={{ minHeight: '600px' }}>
                 <div style={{
                     borderBottom: '1px solid rgba(255,255,255,0.2)', marginBottom: '1rem',
                     paddingBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
                 }}>
                     <h2 style={{ fontSize: '2rem', fontFamily: 'Noto Serif JP', margin: 0, textShadow: '0 0 10px rgba(0,0,0,0.5)' }}>
-                        ACTIVE MISSIONS
+                        FIELD NOTES
                     </h2>
                     <span style={{ fontFamily: 'Teko', fontSize: '1.2rem', color: 'var(--primary)' }}>
-                        COUNT: {filteredItems.length}
+                        COUNT: {notes.length}
                     </span>
                 </div>
 
@@ -76,8 +65,8 @@ const Dashboard = () => {
 
                 <div style={{ maxHeight: '600px', overflowY: 'auto', paddingRight: '0.5rem' }}>
                     <TaskList
-                        tasks={filteredItems}
-                        onToggle={toggleTaskCompletion}
+                        tasks={notes}
+                        onToggle={toggleTaskCompletion} // Notes might not need completion, but keeping for consistency or deletion
                         onDelete={deleteTask}
                     />
                 </div>
@@ -86,4 +75,4 @@ const Dashboard = () => {
         </div>
     )
 }
-export default Dashboard
+export default NotesPage

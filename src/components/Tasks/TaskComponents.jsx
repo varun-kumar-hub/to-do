@@ -4,18 +4,39 @@ import { useState } from 'react'
 import { smartParse } from '../../utils/smartParser'
 import { useTheme } from '../../context/ThemeContext'
 
-export const TaskForm = ({ onAddTask }) => {
+export const TaskForm = ({ onAddTask, defaultType }) => {
     const [input, setInput] = useState('')
     const [description, setDescription] = useState('')
     const [dueTime, setDueTime] = useState('')
     const [imageFile, setImageFile] = useState(null)
+    const [type, setType] = useState(defaultType || 'task')
     const { theme } = useTheme()
     const preview = input ? smartParse(input) : null
 
-    const handleSubmit = async (e) => {
-        e.preventDefault(); if (!input.trim()) return;
+    // Determine visibility based on type
+    const showTitle = type === 'task';
+    const showNotes = type === 'note';
+    const showTime = type === 'task';
+    const showImage = type === 'image';
 
-        const result = await onAddTask(input, description, dueTime, imageFile);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Derive Title if hidden
+        let finalTitle = input;
+        if (type === 'note') {
+            if (!description.trim()) return;
+            // Use first few words of note as title
+            finalTitle = description.split(' ').slice(0, 5).join(' ') + '...';
+        } else if (type === 'image') {
+            if (!imageFile) return;
+            finalTitle = imageFile.name || 'Visual Log';
+        } else {
+            // Task type
+            if (!input.trim()) return;
+        }
+
+        const result = await onAddTask(finalTitle, description, dueTime, imageFile);
         if (result.success) {
             setInput('');
             setDescription('');
@@ -27,34 +48,41 @@ export const TaskForm = ({ onAddTask }) => {
     return (
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div style={{ position: 'relative' }}>
-                <textarea
-                    placeholder="Describe mission objective..."
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    rows={2}
-                    style={{
-                        width: '100%', padding: '0.8rem', fontSize: '1rem',
-                        border: '1px solid var(--primary)', borderRadius: '4px',
-                        background: 'rgba(0,0,0,0.3)', color: 'white',
-                        resize: 'none', fontFamily: 'Sawarabi Mincho'
-                    }}
-                />
 
-                {/* Notes Field */}
-                <textarea
-                    placeholder="Mission Details (Notes)..."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    rows={2}
-                    style={{
-                        width: '100%', padding: '0.8rem', fontSize: '0.9rem',
-                        border: '1px solid var(--primary)', borderTop: 'none', borderRadius: '0 0 4px 4px',
-                        background: 'rgba(0,0,0,0.2)', color: 'rgba(255,255,255,0.8)',
-                        resize: 'vertical', fontFamily: 'Sawarabi Mincho', marginTop: '-4px'
-                    }}
-                />
+                {/* Title Input - ONLY FOR TASKS */}
+                {showTitle && (
+                    <textarea
+                        placeholder="Describe mission objective..."
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        rows={2}
+                        style={{
+                            width: '100%', padding: '0.8rem', fontSize: '1rem',
+                            border: '1px solid var(--primary)', borderRadius: '4px',
+                            background: 'rgba(0,0,0,0.3)', color: 'white',
+                            resize: 'none', fontFamily: 'Sawarabi Mincho'
+                        }}
+                    />
+                )}
 
-                {preview && input && (
+                {/* Notes Field - ONLY FOR NOTES */}
+                {showNotes && (
+                    <textarea
+                        placeholder="Mission Details (Notes)..."
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        rows={4}
+                        style={{
+                            width: '100%', padding: '0.8rem', fontSize: '1rem',
+                            border: '1px solid var(--primary)', borderRadius: '4px',
+                            background: 'rgba(0,0,0,0.3)', color: 'rgba(255,255,255,0.9)',
+                            resize: 'vertical', fontFamily: 'Sawarabi Mincho'
+                        }}
+                    />
+                )}
+
+                {/* Smart Parse Preview - ONLY FOR TASKS */}
+                {showTitle && preview && input && (
                     <div style={{
                         marginTop: '0.5rem',
                         fontSize: '0.8rem', color: 'var(--accent)', fontFamily: 'Teko'
@@ -65,34 +93,41 @@ export const TaskForm = ({ onAddTask }) => {
             </div>
 
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-                <input
-                    type="time"
-                    value={dueTime}
-                    onChange={(e) => setDueTime(e.target.value)}
-                    style={{
-                        background: 'rgba(0,0,0,0.3)', border: '1px solid var(--primary)',
-                        color: 'white', padding: '0.5rem', borderRadius: '4px',
-                        fontFamily: 'Teko', flex: '1 1 100px'
-                    }}
-                />
 
-                <div style={{ position: 'relative', overflow: 'hidden', flex: '1 1 100px' }}>
+                {/* Time Input - ONLY FOR TASKS */}
+                {showTime && (
                     <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => setImageFile(e.target.files[0])}
+                        type="time"
+                        value={dueTime}
+                        onChange={(e) => setDueTime(e.target.value)}
                         style={{
-                            position: 'absolute', opacity: 0, width: '100%', height: '100%', cursor: 'pointer'
+                            background: 'rgba(0,0,0,0.3)', border: '1px solid var(--primary)',
+                            color: 'white', padding: '0.5rem', borderRadius: '4px',
+                            fontFamily: 'Teko', flex: '1 1 100px'
                         }}
                     />
-                    <div style={{
-                        background: 'rgba(0,0,0,0.3)', border: '1px solid var(--primary)',
-                        color: imageFile ? 'var(--accent)' : 'white', padding: '0.5rem', borderRadius: '4px',
-                        fontFamily: 'Teko', textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
-                    }}>
-                        {imageFile ? '📷 ' + imageFile.name : '📷 ATTACH IMAGE'}
+                )}
+
+                {/* Image Input - ONLY FOR IMAGES */}
+                {showImage && (
+                    <div style={{ position: 'relative', overflow: 'hidden', flex: '1 1 100px' }}>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setImageFile(e.target.files[0])}
+                            style={{
+                                position: 'absolute', opacity: 0, width: '100%', height: '100%', cursor: 'pointer'
+                            }}
+                        />
+                        <div style={{
+                            background: 'rgba(0,0,0,0.3)', border: '1px solid var(--primary)',
+                            color: imageFile ? 'var(--accent)' : 'white', padding: '0.5rem', borderRadius: '4px',
+                            fontFamily: 'Teko', textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
+                        }}>
+                            {imageFile ? '📷 ' + imageFile.name : '📷 ATTACH IMAGE'}
+                        </div>
                     </div>
-                </div>
+                )}
 
                 <button type="submit" className="game-btn" style={{ flex: '2 1 150px' }}>SUMMON CROW</button>
             </div>
