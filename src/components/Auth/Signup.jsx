@@ -109,6 +109,22 @@ const Signup = () => {
                         />
                     </div>
 
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <label style={{ fontFamily: 'Teko', fontSize: '1.2rem', color: 'var(--accent)' }}>CONFIRM PASSWORD</label>
+                        <input
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                            minLength={6}
+                            style={{
+                                background: 'rgba(0,0,0,0.3)', border: '1px solid var(--primary)',
+                                padding: '0.8rem', color: 'white', fontSize: '1rem',
+                                outline: 'none'
+                            }}
+                        />
+                    </div>
+
                     <button
                         type="submit"
                         disabled={loading}
