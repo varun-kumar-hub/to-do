@@ -34,7 +34,7 @@ export const useTasks = () => {
         fetchTasks()
     }, [user])
 
-    const addTask = async (rawTitle, description, customTime = '', imageFile = null) => {
+    const addTask = async (rawTitle, description, customTime = '', imageFile = null, type = 'task') => {
         // Apply Smart Parsing
         let { title, priority, dueDate } = smartParse(rawTitle)
 
@@ -76,7 +76,8 @@ export const useTasks = () => {
                     due_date: dueDate,
                     image_url: imageUrl, // Save image URL
                     user_id: user.id,
-                    is_completed: false
+                    is_completed: false,
+                    type: type
                 }])
                 .select()
 

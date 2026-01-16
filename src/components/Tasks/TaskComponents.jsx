@@ -36,7 +36,7 @@ export const TaskForm = ({ onAddTask, defaultType }) => {
             if (!input.trim()) return;
         }
 
-        const result = await onAddTask(finalTitle, description, dueTime, imageFile);
+        const result = await onAddTask(finalTitle, description, dueTime, imageFile, type);
         if (result.success) {
             setInput('');
             setDescription('');
